@@ -22,17 +22,17 @@ client.on('messageCreate', (msg) => {
   if(msg.content.toLowerCase() === 'ping') msg.reply("pong!");
 });
 
-client.on('interactionCreate', async interaction => {
-  if(!interaction.isCommand()) return;
+// client.on('interactionCreate', async interaction => {
+//   if(!interaction.isCommand()) return;
   
-  const { commandName } = interaction;
-  await interaction.deferReply();
+//   const { commandName } = interaction;
+//   await interaction.deferReply();
 
-  if(commandName.toLowerCase() === 'cat') {
-    const catResult = await request('https://aws.random.cat/meow');
-    const { file } = await getJSONResponse(catResult.body);
-    interaction.editReply({ files: [file] });
-  }
-});
+//   if(commandName.toLowerCase() === 'cat') {
+//     const catResult = await request('https://aws.random.cat/meow');
+//     const { file } = await getJSONResponse(catResult.body);
+//     interaction.editReply({ files: [file] });
+//   }
+// });
 
 client.login(process.env.DISCORD_TOKEN);
