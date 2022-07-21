@@ -10,6 +10,6 @@ const commands = [
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
 
-rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
+rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.GUILD_ID), { body: commands })
   .then(() => console.log('Successfully registered application commands'))
   .catch(console.error);
