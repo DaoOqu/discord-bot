@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { request } = require('undici');
 
 async function getJSONResponse(body) {
   let fullBody = '';
@@ -15,8 +16,8 @@ module.exports = {
     .setName('cat')
     .setDescription('Replies with a pic/gif of a cat!'),
   async execute(interaction) {
-      const catResult = 'https://aws.random.cat/meow';
+      const catResult = await request('https://aws.random.cat/meow');
       const { file } = await getJSONResponse(catResult.body);
-      interaction.reply({ file: [file] });
+      interaction.reply({ files: [file] });
   },
 };
