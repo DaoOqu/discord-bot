@@ -1,8 +1,19 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { words } = require("C:/Users/PC/Desktop/GitHub Repos/discord-bot/commands/utility/fast-type-words.json");
+require("dotenv").config();
 
 // use guild ID
 const example = {
-
+  channelId: {
+    message: 'message object',
+    stage: 'string',
+    counter: 'number',
+    currentWord: 'string',
+    remainingWords: ['words here'],
+    points: {
+      userId: 'points'
+    }
+  }
 }
 
 const games = {}
@@ -21,10 +32,11 @@ const gameLoop = () => {
     const { message, stage } = game
 
     if(stage === 'STARTING') {
-      message.edit(stages[stage])(game.counter);
+      const string = stages[stage](game.counter);
+      message.edit(string);
     }
 
-    --game.conter;
+    --game.counter;
   }
 
   setTimeout(gameLoop, 1000)
@@ -35,23 +47,18 @@ module.exports = {
     .setName('fasttype')
     .setDescription('Starts fast type game! A game that tests how fast you can type the given word!'),
 
-    // gameLoop() ??
-
   async execute(interaction) {
-    const { channel } = message
+    const { channel } = interaction;
 
-    message.delete();
+    // message.delete();
     channel.send('Preparing game...').then((message) => {
-      games[channel.id] = {
+      games[channel] = {
         message,
         stage: 'STARTING',
         counter: 5,
-        remainingWords: [],
+        remainingWords: [...words],
         points: {}
       }
     })
-
-    // gameLoop() ??
-
-  },
+  }
 };
